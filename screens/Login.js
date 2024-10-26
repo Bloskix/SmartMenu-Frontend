@@ -3,15 +3,25 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import useInput from '../hooks/useInput';
+import axios from 'axios';
 
 const Login = ({ navigation, onLogin }) => {
   const username = useInput('');
   const password = useInput('');
 
   const handleLogin = async () => {
-    // Simulación de autenticación: reemplaza esto con tu llamada a la API
-    const token = 'fake-jwt-token'; // Aquí deberías obtener el token real de la API
-    onLogin(token);
+    try {
+      const response = await axios.post('http://192.168.18.33:8080/auth/login', {
+        username: username.value, 
+        password: password.value,
+      });
+      
+      const token = response.data.token; 
+      onLogin(token); 
+    } catch (error) {
+      console.error('Error al registrarse:', error);
+      // Aquí podrías mostrar un mensaje de error en la UI
+    }
   };
 
   return (
