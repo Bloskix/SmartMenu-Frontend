@@ -4,25 +4,22 @@ import Button from '../components/Button';
 import Input from '../components/Input';
 import useInput from '../hooks/useInput';
 
-const Login = ({ navigation }) => {
+const Login = ({ navigation, onLogin }) => {
   const username = useInput('');
   const password = useInput('');
+
+  const handleLogin = async () => {
+    // Simulación de autenticación: reemplaza esto con tu llamada a la API
+    const token = 'fake-jwt-token'; // Aquí deberías obtener el token real de la API
+    onLogin(token);
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.headerText}>Login</Text>
-      <Input
-        placeholder="Username"
-        value={username.value}
-        onChangeText={username.onChangeText}
-      />
-      <Input
-        placeholder="Password"
-        value={password.value}
-        onChangeText={password.onChangeText}
-        secureTextEntry
-      />
-      <Button title="Sign in" onPress={() => {}} />
+      <Input placeholder="Username" value={username.value} onChangeText={username.onChangeText} />
+      <Input placeholder="Password" value={password.value} onChangeText={password.onChangeText} secureTextEntry />
+      <Button title="Sign in" onPress={handleLogin} />
       <TouchableOpacity onPress={() => navigation.navigate('Register')}>
         <Text style={styles.linkText}>Don't have an account? Register</Text>
       </TouchableOpacity>
