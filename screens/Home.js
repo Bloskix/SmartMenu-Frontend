@@ -1,11 +1,20 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import DayCarousel from '../components/DayCarousel';
+import BottomNavigation from '../components/BottomNavigation';
+import { FontAwesome } from '@expo/vector-icons';
 
-const Home = ({ logout }) => {
+const Home = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.welcomeText}>Welcome to SmartMenu!</Text>
-      <Button title="Logout" onPress={logout} />
+      <View style={styles.header}>
+        <TouchableOpacity>
+          <FontAwesome name="bars" size={30} color="#333" />
+        </TouchableOpacity>
+        <Text style={styles.logo}>SmartMenu</Text>
+      </View>
+      <DayCarousel />
+      <BottomNavigation />
     </View>
   );
 };
@@ -13,17 +22,24 @@ const Home = ({ logout }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
+    backgroundColor: '#E0E5EC',
+    justifyContent: 'space-between',
   },
-  welcomeText: {
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: '#E0E5EC',
+  },
+  logo: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
+    color: '#333',
   },
 });
 
 export default Home;
+
+
 
