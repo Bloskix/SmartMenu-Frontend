@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useState, useEffect } from 'react';
 
 import Home from '../screens/Home';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
-import DayDetails from '../screens/DayDetails'
+import DayDetails from '../screens/DayDetails';
+import CookBook from '../screens/CookBook';
+import Profile from '../screens/Profile';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +39,9 @@ const Routes = () => {
           <Stack.Screen name="Home">
             {(props) => <Home {...props} logout={handleLogout} />}
           </Stack.Screen>
-            <Stack.Screen name="DayDetails" component={DayDetails} />
+          <Stack.Screen name="DayDetails" component={DayDetails} />
+          <Stack.Screen name="CookBook" component={CookBook} />
+          <Stack.Screen name="Profile" component={Profile} />
         </>
       ) : (
         <>
@@ -54,3 +58,4 @@ const Routes = () => {
 };
 
 export default Routes;
+

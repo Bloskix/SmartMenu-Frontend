@@ -18,8 +18,8 @@ const DayCard = ({ day }) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: 350,  // Ajusta el tamaño de la tarjeta aquí
-    height: 600, // Ajusta la altura para hacerla más grande
+    width: 350,  
+    height: 620, 
     backgroundColor: '#F0F0F3',
     borderRadius: 20,
     justifyContent: 'center',

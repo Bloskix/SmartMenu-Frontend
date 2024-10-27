@@ -2,18 +2,20 @@ import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import DayCarousel from '../components/DayCarousel';
 import BottomNavigation from '../components/BottomNavigation';
-import { FontAwesome } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Home = () => {
+const Home = ({ logout }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
-          <FontAwesome name="bars" size={30} color="#333" />
+        <TouchableOpacity onPress={logout} style={styles.logoutButton}>
+          <Ionicons name="exit-outline" size={24} color="red" />
         </TouchableOpacity>
         <Text style={styles.logo}>SmartMenu</Text>
       </View>
-      <DayCarousel />
+      <View style={styles.carouselContainer}>
+        <DayCarousel />
+      </View>
       <BottomNavigation />
     </View>
   );
@@ -23,13 +25,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E0E5EC',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start', 
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
+    padding: 20, 
     backgroundColor: '#E0E5EC',
   },
   logo: {
@@ -40,6 +42,7 @@ const styles = StyleSheet.create({
 });
 
 export default Home;
+
 
 
 
