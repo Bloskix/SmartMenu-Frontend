@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Home from '../screens/Home';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
+import DayDetails from '../screens/DayDetails'
 
 const Stack = createNativeStackNavigator();
 
@@ -32,9 +33,12 @@ const Routes = () => {
   return (
     <Stack.Navigator>
       {isAuthenticated ? (
-        <Stack.Screen name="Home">
-          {(props) => <Home {...props} logout={handleLogout} />}
-        </Stack.Screen>
+        <>
+          <Stack.Screen name="Home">
+            {(props) => <Home {...props} logout={handleLogout} />}
+          </Stack.Screen>
+            <Stack.Screen name="DayDetails" component={DayDetails} />
+        </>
       ) : (
         <>
           <Stack.Screen name="Login">
