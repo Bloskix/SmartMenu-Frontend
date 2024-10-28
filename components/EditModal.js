@@ -19,7 +19,7 @@ const EditModal = ({ visible, onClose, data }) => {
               keyExtractor={(item, index) => index.toString()}
               ItemSeparatorComponent={() => <Separator />}
             />
-            <Button title="Cerrar" onPress={onClose} />
+            <Button title="Close" onPress={onClose} />
           </View>
         </BlurView>
       </View>

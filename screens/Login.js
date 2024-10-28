@@ -11,7 +11,7 @@ const Login = ({ navigation, onLogin }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://192.168.18.33:8080/auth/login', {
+      const response = await axios.post('http://10.51.7.51:8080/auth/login', {
         username: username.value, 
         password: password.value,
       });
