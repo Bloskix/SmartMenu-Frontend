@@ -9,13 +9,13 @@ const meals = [
   { id: '4', title: 'Meal 4' },
 ];
 
-const MealCarousel = () => {
+const MealCarousel = ({ screen }) => {
   return (
     <View style={styles.carousel}>
       <FlatList
         data={meals}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <MealCard title={item.title} />}
+        renderItem={({ item }) => <MealCard title={item.title} screen={screen} />}
         showsVerticalScrollIndicator={false}
       />
     </View>
@@ -30,4 +30,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 });
+
 

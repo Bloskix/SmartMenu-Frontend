@@ -30,7 +30,7 @@ const CookBook = () => {
   return (
     <View style={styles.container}>
       <MealOptionsButton selectedType={selectedType} onSelect={handleSelect} />
-      <MealCarousel meals={filteredMeals} />
+      <MealCarousel meals={filteredMeals} screen="CookBook" />
       <BottomNavigation />
     </View>
   );

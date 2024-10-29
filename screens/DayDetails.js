@@ -18,7 +18,7 @@ const DayDetails = () => {
       </View>
 
       <View style={styles.carouselContainer}>
-        <MealCarousel />
+        <MealCarousel screen="DayDetails" />
       </View>
 
       <BottomNavigation />

@@ -1,13 +1,35 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import EditButton from './EditButton';
-import EditModal from './EditModal';
+import CookBookEditModal from './CookBookEditModal';
+import DayDetailsEditModal from './DayDetailsEditModal';
 import Separator from './Separator';
 
-const MealCard = ({ title = "Título", subtitle = "Subtítulo" }) => {
+const MealCard = ({ title = "Título", subtitle = "Subtítulo", screen, dayId, oldMeal }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
-  const data = ["Opción 1", "Opción 2", "Opción 3"]; // Datos para la lista en el modal
+  const data = ["Opción 1", "Opción 2", "Opción 3"]; 
+  
+  const renderModal = () => {
+    if (screen === 'CookBook') {
+      return (
+        <CookBookEditModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          data={data}
+        />
+      );
+    } else {
+      return (
+        <DayDetailsEditModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+          dayId={dayId}
+          oldMeal={oldMeal}
+        />
+      );
+    }
+  };
 
   return (
     <View style={styles.card}>
@@ -28,8 +50,7 @@ const MealCard = ({ title = "Título", subtitle = "Subtítulo" }) => {
         <EditButton onPress={() => setModalVisible(true)} />
       </View>
 
-      {/* Modal */}
-      <EditModal visible={modalVisible} onClose={() => setModalVisible(false)} data={data} />
+      {modalVisible && renderModal()}
     </View>
   );
 };
@@ -80,6 +101,3 @@ const styles = StyleSheet.create({
 });
 
 export default MealCard;
-
-
-
