@@ -8,6 +8,7 @@ import Register from '../screens/Register';
 import DayDetails from '../screens/DayDetails';
 import CookBook from '../screens/CookBook';
 import Profile from '../screens/Profile';
+import AddMeal from '../screens/AddMeal';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,6 +43,7 @@ const Routes = () => {
           <Stack.Screen name="DayDetails" component={DayDetails} />
           <Stack.Screen name="CookBook" component={CookBook} />
           <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="AddMeal" component={AddMeal} />
         </>
       ) : (
         <>

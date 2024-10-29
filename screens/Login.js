@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import useInput from '../hooks/useInput';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const Login = ({ navigation, onLogin }) => {
@@ -11,12 +12,13 @@ const Login = ({ navigation, onLogin }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://10.51.7.51:8080/auth/login', {
+      const response = await axios.post('http://192.168.18.33:8080/auth/login', {
         username: username.value, 
         password: password.value,
       });
       
       const token = response.data.token; 
+      await AsyncStorage.setItem('userToken', token);
       onLogin(token); 
     } catch (error) {
       console.error('Error al registrarse:', error);

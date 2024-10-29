@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Button from '../components/Button';
 import Input from '../components/Input';
 import useInput from '../hooks/useInput';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const Register = ({ navigation, onLogin }) => {
@@ -19,6 +20,7 @@ const Register = ({ navigation, onLogin }) => {
       });
       
       const token = response.data.token; 
+      await AsyncStorage.setItem('userToken', token);
       onLogin(token); 
     } catch (error) {
       console.error('Error al registrarse:', error);
