@@ -1,13 +1,23 @@
 import React from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
-import CarouselCard from './DayCard';
+import DayCard from './DayCard';
 
-const DayCarousel = () => {
+const DayCarousel = ({ days, setDays }) => {
+  const handleDeleteDay = (index) => {
+    setDays(days.filter((_, i) => i !== index));
+  };
+
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.carousel}>
-      {[1, 2, 3, 4, 5, 6, 7].map(day => (
-        <View key={day} style={styles.cardContainer}>
-          <CarouselCard day={day} />
+      {days.map((day, index) => (
+        <View key={day.id} style={styles.cardContainer}>
+          <DayCard
+            day={day}
+            title={`Title ${day.id}`}
+            subtitle={`Subtitle ${day.id}`}
+            prep={`${day.id * 5}m`}
+            onDelete={() => handleDeleteDay(index)}
+          />
         </View>
       ))}
     </ScrollView>
@@ -25,3 +35,5 @@ const styles = StyleSheet.create({
 });
 
 export default DayCarousel;
+
+

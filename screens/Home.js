@@ -1,10 +1,21 @@
-import React from 'react';
-import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import DayCarousel from '../components/DayCarousel';
-import BottomNavigation from '../components/BottomNavigation';
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import AddButton from '../components/AddButton';
+import DayCard from '../components/DayCard';
+import BottomNavigation from '../components/BottomNavigation';
 
 const Home = ({ logout }) => {
+  const [days, setDays] = useState([]);
+
+  const handleAddDay = () => {
+    setDays([...days, { id: days.length + 1 }]);
+  };
+
+  const handleDeleteDay = (id) => {
+    setDays(days.filter((day) => day.id !== id));
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -13,9 +24,29 @@ const Home = ({ logout }) => {
         </TouchableOpacity>
         <Text style={styles.logo}>SmartMenu</Text>
       </View>
-      <View style={styles.carouselContainer}>
-        <DayCarousel />
-      </View>
+
+      {days.length === 0 ? (
+        <View style={styles.centeredAddButton}>
+          <AddButton onPress={handleAddDay} size={60} />
+        </View>
+      ) : (
+        <ScrollView horizontal contentContainerStyle={styles.cardContainer} showsHorizontalScrollIndicator={false}>
+          {days.map((day) => (
+            <View key={day.id} style={styles.cardWrapper}>
+              <DayCard
+                day={day}
+                title={`Title ${day.id}`}
+                subtitle={`Subtitle ${day.id}`}
+                onDelete={() => handleDeleteDay(day.id)}
+              />
+            </View>
+          ))}
+          <View style={styles.cardWrapper}>
+            <AddButton onPress={handleAddDay} size={60} />
+          </View>
+        </ScrollView>
+      )}
+
       <BottomNavigation />
     </View>
   );
@@ -25,13 +56,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E0E5EC',
-    justifyContent: 'flex-start', 
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 20, 
+    paddingTop: 10,
+    paddingHorizontal: 20,
     backgroundColor: '#E0E5EC',
   },
   logo: {
@@ -39,10 +70,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
   },
+  cardContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 20,
+    paddingHorizontal: 20,
+    marginTop: -50,
+  },
+  centeredAddButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  cardWrapper: {
+    marginHorizontal: 10,
+  },
 });
 
 export default Home;
-
-
-
-
