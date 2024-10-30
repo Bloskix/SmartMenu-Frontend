@@ -49,12 +49,12 @@ const CookBook = ({ navigation }) => {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
           <MealCard
+            mealId={item.id}
             mealName={item.name}
             mealType={item.type}
             mealIngredients={item.ingredients}
             mealPrepTime={item.prepTime}
-            screen="CookBook"  
-            dayId={null}       
+            screen="CookBook"        
             oldMeal={null}
           />
         )}

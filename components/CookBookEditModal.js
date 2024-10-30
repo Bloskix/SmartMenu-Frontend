@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, ScrollView, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ScrollView, Modal, TouchableOpacity, Alert } from 'react-native';
 import { BlurView } from 'expo-blur';
-import Separator from './Separator';
 import AddButton from './AddButton';
 import Button from './Button';
+import DeleteMealButton from './DeleteMealButton';
+import apiClient from '../api/apiClient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const CookBookEditModal = ({ visible, onClose }) => {
-  const [ingredients, setIngredients] = useState([{ name: '', quantity: '' }]);
+const CookBookEditModal = ({ visible, onClose, mealId }) => {
+  const [mealName, setMealName] = useState('');
+  const [mealType, setMealType] = useState(null);
+  const [prepTime, setPrepTime] = useState('');
+  const [ingredients, setIngredients] = useState([]); 
 
   const handleIngredientChange = (index, key, value) => {
     const updatedIngredients = [...ingredients];
@@ -24,6 +28,26 @@ const CookBookEditModal = ({ visible, onClose }) => {
     setIngredients(updatedIngredients);
   };
 
+  const handleUpdate = async () => {
+    try {
+      const mealData = {
+        name: mealName,
+        type: mealType,
+        prepTime: prepTime,
+        ingredients: ingredients.map((ingredient) => ({
+          name: ingredient.name,
+          quantity: ingredient.quantity,
+        })),
+      };
+
+      const response = await apiClient.put(`/meals/${mealId}`, mealData);
+      Alert.alert("Meal updated successfully");
+      onClose(); 
+    } catch (error) {
+      Alert.alert("Failed to update meal", error.message);
+    }
+  };
+
   return (
     <Modal animationType="slide" transparent={true} visible={visible} onRequestClose={onClose}>
       <View style={styles.modalContainer}>
@@ -32,9 +56,25 @@ const CookBookEditModal = ({ visible, onClose }) => {
             <Text style={styles.headerText}>Edit Meal</Text>
 
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-              <TextInput placeholder="Change meal name" style={styles.input} />
-              <TextInput placeholder="Change type" style={styles.input} />
-              <TextInput placeholder="Change prep time" style={styles.input} keyboardType="numeric" />
+              <TextInput 
+                placeholder="Change meal name" 
+                style={styles.input}
+                value={mealName}
+                onChangeText={setMealName} 
+              />
+              <TextInput 
+                placeholder="Change type" 
+                style={styles.input}
+                value={mealType}
+                onChangeText={setMealType} 
+              />
+              <TextInput 
+                placeholder="Change prep time" 
+                style={styles.input} 
+                keyboardType="numeric"
+                value={prepTime}
+                onChangeText={setPrepTime} 
+              />
 
               {ingredients.map((ingredient, index) => (
                 <View key={index} style={styles.ingredientRow}>
@@ -51,15 +91,19 @@ const CookBookEditModal = ({ visible, onClose }) => {
                     value={ingredient.quantity}
                     onChangeText={(text) => handleIngredientChange(index, 'quantity', text)}
                   />
+
                   <TouchableOpacity onPress={() => removeIngredient(index)}>
                     <Ionicons name="remove-circle" size={24} color="red" />
                   </TouchableOpacity>
                 </View>
               ))}
+
               <AddButton onPress={addIngredient} />
             </ScrollView>
 
-            <Button title="Update" />
+            <Button onPress={handleUpdate} title="Update" />
+
+            <DeleteMealButton mealId={mealId} onDeleteSuccess={onClose} />
 
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
               <Ionicons name="close-outline" size={24} color="red" />
@@ -70,6 +114,7 @@ const CookBookEditModal = ({ visible, onClose }) => {
     </Modal>
   );
 };
+
 
 const styles = StyleSheet.create({
   modalContainer: {

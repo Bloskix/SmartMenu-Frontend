@@ -5,7 +5,7 @@ import CookBookEditModal from './CookBookEditModal';
 import DayDetailsEditModal from './DayDetailsEditModal';
 import Separator from './Separator';
 
-const MealCard = ({ mealName, mealType, mealIngredients, mealPrepTime, screen, dayId, oldMeal }) => {
+const MealCard = ({ mealName, mealType, mealIngredients, mealPrepTime, screen, mealId, oldMeal }) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const renderModal = () => {
@@ -14,7 +14,7 @@ const MealCard = ({ mealName, mealType, mealIngredients, mealPrepTime, screen, d
         <CookBookEditModal 
         visible={modalVisible}
         onClose={() => setModalVisible(false) }
-        data={data}
+        mealId={mealId}
         />
       );
     } else {
@@ -22,7 +22,7 @@ const MealCard = ({ mealName, mealType, mealIngredients, mealPrepTime, screen, d
         <DayDetailsEditModal 
         visible={modalVisible}
         onClose={ () => setModalVisible(false) }
-        dayId={dayId}
+        mealId={mealId}
         oldMeal={oldMeal}
         />
       );
