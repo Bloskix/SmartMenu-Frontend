@@ -64,67 +64,67 @@ const MealCard = ({ mealName, mealType, mealIngredients, mealPrepTime, screen, d
 };
 
 const styles = StyleSheet.create({
-card: {
-width: 350,
-height: 580,
-backgroundColor: '#f0f0f0',
-padding: 20,
-borderRadius: 10,
-marginVertical: 8,
-marginHorizontal: 16,
-},
-header: {
-alignItems: 'center',
-marginBottom: 10,
-},
-cardTitle: {
-fontSize: 30,
-fontWeight: 'bold',
-textAlign: 'center',
-},
-cardSubtitle: {
-fontSize: 14,
-color: '#888',
-textAlign: 'center',
-},
-ingredientsTitle: {
-marginTop: 15,
-fontSize: 15,
-fontWeight: 'bold',
-textAlign: 'center',
-},
-list: {
-flexGrow: 1,
-marginVertical: 10,
-},
-listItem: {
-fontSize: 16,
-color: '#333',
-marginVertical: 5,
-},
-footer: {
-flexDirection: 'row',
-justifyContent: 'space-between',
-alignItems: 'center',
-marginTop: 10,
-},
-footerText: {
-fontSize: 14,
-color: '#555',
-},
-ingredientRow: {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  paddingVertical: 4,
-},
-ingredientName: {
-  fontSize: 16,
-  color: '#333',
-},
-ingredientQuantity: {
-  fontSize: 16,
-  color: '#333',
-},
+  card: {
+    width: 350,
+    height: 500,
+    backgroundColor: '#f0f0f0',
+    padding: 20,
+    borderRadius: 10,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  cardTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  cardSubtitle: {
+    fontSize: 14,
+    color: '#888',
+    textAlign: 'center',
+  },
+  ingredientsTitle: {
+    marginTop: 15,
+    fontSize: 15,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  list: {
+    flexGrow: 1,
+    marginVertical: 10,
+  },
+  listItem: {
+    fontSize: 16,
+    color: '#333',
+    marginVertical: 5,
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  footerText: {
+    fontSize: 14,
+    color: '#555',
+  },
+  ingredientRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 4,
+  },
+  ingredientName: {
+    fontSize: 16,
+    color: '#333',
+  },
+  ingredientQuantity: {
+    fontSize: 16,
+    color: '#333',
+  },
 });
 export default MealCard;
