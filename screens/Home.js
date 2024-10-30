@@ -1,19 +1,52 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AddButton from '../components/AddButton';
 import DayCard from '../components/DayCard';
 import BottomNavigation from '../components/BottomNavigation';
+import apiClient from '../api/apiClient';
 
 const Home = ({ logout }) => {
   const [days, setDays] = useState([]);
 
-  const handleAddDay = () => {
-    setDays([...days, { id: days.length + 1 }]);
+  const createDay = async (dayNumber) => {
+    try {
+      const response = await apiClient.post('/days', {
+        dayNumber, 
+        meals: [],
+      });
+      return Array.isArray(response.data) ? response.data : response.data;
+    } catch (error) {
+      console.error("Error creating day:", error);
+      alert("Could not create the day");
+      return null;
+    }
   };
 
-  const handleDeleteDay = (id) => {
-    setDays(days.filter((day) => day.id !== id));
+  const handleAddDay = async () => {
+    const newDayNumber = days.length + 1;
+    const newDay = await createDay(newDayNumber);
+    if (newDay) {
+      setDays((prevDays) => [...prevDays, newDay]); // Añadir sin sobrescribir
+    }
+  };
+
+  const handleDeleteDay = async (id) => {
+    try {
+      const response = await apiClient.delete(`/days/${id}`);
+      if (response.status === 200) {
+        const updatedDays = days.filter((day) => day.id !== id);
+        const reorderedDays = updatedDays.map((day, index) => ({
+          ...day,
+          dayNumber: index + 1,
+        }));
+        setDays(reorderedDays);
+        alert("Day deleted successfully");
+      }
+    } catch (error) {
+      console.error("Error deleting day:", error);
+      alert("Could not delete the day");
+    }
   };
 
   return (
@@ -35,8 +68,6 @@ const Home = ({ logout }) => {
             <View key={day.id} style={styles.cardWrapper}>
               <DayCard
                 day={day}
-                title={`Title ${day.id}`}
-                subtitle={`Subtitle ${day.id}`}
                 onDelete={() => handleDeleteDay(day.id)}
               />
             </View>
@@ -51,6 +82,7 @@ const Home = ({ logout }) => {
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -74,7 +106,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 20,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     marginTop: -50,
   },
   centeredAddButton: {

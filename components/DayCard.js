@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import DeleteDayButton from './DeleteDayButton';
 import Separator from './Separator';
-import DeleteButton from './DeleteButton';
 
-const DayCard = ({ day, title, subtitle, prep, onDelete }) => {
+const DayCard = ({ day, onDelete }) => {
   const navigation = useNavigation();
 
   const handlePress = () => {
@@ -13,14 +13,16 @@ const DayCard = ({ day, title, subtitle, prep, onDelete }) => {
 
   return (
     <TouchableOpacity style={styles.card} onPress={handlePress}>
-      <DeleteButton onDelete={onDelete} />
+      <DeleteDayButton onDelete={onDelete} />
     
-      {[1, 2, 3, 4].map((_, index) => (
+      <Text style={styles.title}>Day {day.dayNumber}</Text>
+
+      {day.meals.slice(0, 4).map((meal, index) => (
         <View key={index} style={styles.section}>
-          <Text style={styles.title}>Title {index + 1}</Text>
-          <Text style={styles.subtitle}>Subtitle {index + 1}</Text>
-          <Text style={styles.prep}>{index * 5}m</Text>
-        </View>
+          <Text style={styles.title}>{meal.name}</Text>
+          <Text style={styles.subtitle}>{meal.type}</Text>
+          <Text style={styles.prep}>{meal.prepTime}m</Text>
+      </View>
       ))}
     </TouchableOpacity>
   );
